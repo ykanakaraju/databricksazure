@@ -1,0 +1,45 @@
+  
+  Lab 11 - Rollback a Delta Table to an old version
+  ----------------------------------------------------
+  
+ 1. Create a single node 'All-purpose compute' cluster.
+ 
+ 2. Import the notebook provided for this lab.
+ 
+		Notebooks to import:
+		* Delta-using-DataFrames-4.dbc
+		* Delta-using-DataFrames-5.dbc
+ 
+ 
+ 3. Open the notebook 'Delta-using-DataFrames-5.dbc' and run the cells.
+    Examine the results to understand how restoring point-in-time snapshots work on Delta tables.
+	
+		In this notebook, we demonstrate the following:
+			
+		* Examine the history of Delta table
+		* Perform 'Restore to version' on delta table
+		* Perform 'Restore to timestamp' on delta table
+			
+	
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

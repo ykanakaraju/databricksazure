@@ -1,0 +1,79 @@
+  
+  Lab 6d - Databricks Repos - Git Integration
+  -------------------------------------------
+  
+  NOTE: Git integration is supported only in "Premium" pricing-tier
+  
+  1. Login to your existing Github account.
+  
+  2. Setup Git integration in your Databricks workspace
+	2.1 Goto <Account> -> User Settings -> Linked accounts
+	2.2 Git provider: select 'Github'
+	2.3 Select 'Link Git account' option -> Click 'Link' button
+	2.4 Click on 'Authorize Databricks' to authorize. 
+
+  3. Goto your Github account and create a new repo.  
+	3.1 Repositories -> New
+	3.2 Repository name: DemoDatabricksRepo
+		Select 'Private'
+		Check 'Add a README file' checkbox
+		Click 'Create repository' button
+	3.3 Copy the URL of the repo	
+		Click on 'Code' -> click on copy link to copy the URL	
+		
+  4. Add Repo in your Databricks workspace.
+	4.1 Go to your Databricks account and open your workspace
+	4.2 Click on "Repos" link -> <your Github account menu> -> Create -> Repo
+	4.3 Check 'Create repo by cloning a Git repository' and paste the URL you copied in step 3.3
+	4.4 Click on "Create Repo" button
+	The Repo will be linked to your workspace
+	
+  5. Create a new brank in your linked repo.
+	5.1 Open the Repo and click on 'main' button 
+	5.2 Click on 'Create Branch' button
+		Branch name: 'practice' -> Create
+		Close the window
+	5.3 With 'practice' branch selected, add a new folder
+		'Add' -> Folder -> 'demo_folder' -> create
+	5.4 Add a notebbok in this folder
+		'Add' -> Notebook; 	Name: Demo-Notebook	
+		You can also import external notebooks	
+		You can also clone existing notebooks in the workspace
+		
+  6. Push these changes to the repository
+	6.1 Click on the 'practice' branch (icon just after your repo name)
+	6.2 Add a commit message (some text) and click 'Commit & Push' button.
+	6.3 Switch back to 'main' folder. (select from the dropdown)
+		No changes will seen at this point.
+		
+  7. Pull the changes into your Github account	
+	7.1 Goto Github account and select 'practice' branch from the dropdown	
+	    (If your branch did not appear try selecting it from 'view all branches' option)
+	7.2 Click on 'Contribute' 
+			-> Open pull request 
+			-> Create pull request 
+			-> Merge pull request 
+			-> Confirm	
+			
+  8. Switch back to Databricks workspace
+	8.1 Open your repo and select 'main' branch
+	8.2 Click 'Pull' button and 'Confirm'
+	Now, you will have the changes you made to the 'practice' branch in the 'main' branch.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

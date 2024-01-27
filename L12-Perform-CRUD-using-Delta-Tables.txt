@@ -1,0 +1,72 @@
+  
+  Lab 10 - Perform CRUD operations using Delta tables
+  ----------------------------------------------------
+  
+ 1. Create a single node 'All-purpose compute' cluster.
+ 
+ 2. Import the notebook provided for this lab.
+ 
+		Notebooks to import:
+		
+		* Delta-using-DataFrames-1.dbc
+		* Delta-using-DataFrames-2.dbc
+		* Delta-using-DataFrames-3.dbc
+		* Delta-using-DataFrames-4.dbc
+ 
+ 
+ 3. Open the notebook 'Delta-using-DataFrames-2.dbc' and run the cells.
+    Examine the commands to understand how delta format and Delta tables are being used.
+	
+		In this notebook, we demostrate the following:
+			
+		* Create source dataframes from well-formed JSON strings (first notebook)
+		* Save the dataframes into a directory in delta format
+		* Create dataframe from the delta files
+		* Create a DeltaTable reading from delta file path
+		* Perform an UPDATE using the DeltaTable
+		* Perform a DELETE using the DeltaTable
+			
+	
+ 4. Open the notebook 'Delta-using-DataFrames-3.dbc' and run the cells.
+    Examine the commands to understand how delta format and Delta tables are being used.
+	
+		In this notebook, we demostrate the following:
+			
+		* Create source dataframes from well-formed JSON strings (first notebook)
+		* Save the dataframes into a directory in delta format
+		* Create dataframe from the delta files
+		* Create a DeltaTable reading from delta file path
+		* Perform MERGE operation using the DeltaTable  
+			
+			
+ 5. Open the notebook 'Delta-using-DataFrames-4.dbc' and run the cells.
+    Examine the commands to understand how delta format and Delta tables are being used.
+	
+		In this notebook, we demonstrate the following:
+			
+		* Create source dataframes from well-formed JSON strings (first notebook)
+		* Save the dataframes into a directory in delta format
+		* Create dataframe from the delta files
+		* Create a DeltaTable reading from delta file path
+		* Perform Insert, Update and Delete data using MERGE.  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

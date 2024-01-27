@@ -1,0 +1,204 @@
+
+ Lab 9 - Working with ADLS-gen2
+ -------------------------------
+ Ref URL: https://learn.microsoft.com/en-us/azure/databricks/storage/azure-storage
+ 
+ 
+ 1. Login to the Azure portal and make sure you have the following resources
+    (Create them if not alreday there)
+	
+	1.1 A resource group (name: cts-demo-rg)
+	1.2 A storage account (name: ctsdemosa) within the above resource group
+	1.3 An Azure Databricks workspace (cts-demo-standard-eastus-ws)
+			Pricing tier: Standard
+			Region: East US
+			
+ 2. Open the storage account and upload sample data into a container
+ 
+	2.1 Open the Storage account page from the Azure portal
+	2.2 Click on 'Containers' menu and click on '+ Container' to add.
+		name: demo
+	2.3 Open the container and click on 'Upload' to add the following file.
+		file: circuits.csv
+		
+ 3. Disable 'soft delete' for blobs and containers
+ 
+	3.1 Open the Storage account page from the Azure portal
+	3.2 Click on 'Data protection' option under 'Data management'
+	3.3 Uncheck the following:
+		Uncheck: Enable soft delete for blobs
+		Uncheck: Enable soft delete for containers
+	3.4 Click on 'Save' to save the changes
+  
+ 
+ 4. Open your Databricks workspace and create an 'All purpose' cluster.
+ 
+		name: CTS Demo Cluster
+		Single node 
+		Access mode: Single user
+		Databricks runtime version: 13.3 LTS
+		Uncheck 'Use Photon Acceleration'
+		Node type: Standard_F4
+		Terminate after 20 minutes of inactivity
+		
+		** Your cost should be 0.5 DBU/hour
+		
+		
+		
+ Lab 9a: Access ADLS using access keys
+ -------------------------------------
+
+ 5. Get the 'Access key' of your storage account. 
+ 
+	5.1 Open you storage account and click on 'Access keys' menu option (under 'Security + networking')
+		There will be two keys here. You can use 'key 1'
+		
+	5.2 Click on 'Show' button of the 'Key' and copy the key.
+		This is the access key of your storage account
+	
+ 6. Import the following notebook and run it.
+	Make sure to change 'storage account' and 'access key' as in your case.
+	
+	Notebook: ADLS-using-Access-Keys.dbc
+	
+	
+	
+ Lab 9b: Access ADLS using SAS token
+ -----------------------------------
+	SAS -> Shared Access Signature
+	
+ 7. Generate the SAS token for your container
+ 
+	7.1 Open your storage account and then your container from Azure portal
+	7.2 Click on context menu (... icon) of your container and select 'Generate SAS'
+	7.3 Under permissions dropdown select 'Read' and 'List'
+	7.4 Choose appropriate time period (Start and End times for the validity of the token)
+	7.5 Click on 'Generate SAS toke and URL' button
+	7.6 Copy and save the Blob SAS token' and save it somewhere. 
+	
+ 8. Import the following notebook and run it.
+	Make sure to change 'storage account' and 'SAS token' as in your case.
+	
+	Notebook: ADLS-using-SAS-token.dbc	
+	
+	
+	
+ Lab 9c: Access ADLS using Service Principal
+ -------------------------------------------
+  => A Service Principal is like a user account that can be registered in the Entra ID (Active Directory)
+     SPs are assigned permissions to access resources in your Azure subscription via RBAC (role-based access control). 
+	 This is the recommended approach to use in automated workloads and CI/CD pipelines.
+     
+	
+ 9. Register Microsoft Entra ID Application / Service Principal 
+    NOTE: Microsoft Entra ID is formerly known as Microsoft Active Directory
+	
+	9.1 Search for and open 'Microsoft Entra ID' and Click on 'App registrations' menu option.
+	9.2 Click on '+ Create an application' and create an app as below:
+		name: cts-adls-using-sp-app
+	9.3 Click on 'Register' button
+	    This creates a Service Principal for us. 
+	9.4 Make a note of the following details from the app registration page.
+	
+			Application (client) ID: <Application (client) ID>
+			Directory (tenant) ID: <Directory (tenant) ID>
+			
+ 10. Generate a secret/password for the Application
+ 
+	10.1 Click on 'Certificates & secrets' on your app registration page.
+	10.2 Click on '+ New Secret' button. 
+	10.3 Create a secret as follows:
+		Description: CTS ADLS Using Service Pricipal
+		** DO NOT NAVIGATE AWAY FROM THIS PAGE UNTIL YOU COPY REQUIRED INFO **
+	10.4 Make a note of the secret value (value, not id)
+	
+		Client Secret Value: <VALUE>
+		
+ 11. Assign Role 'Storage Blob Data Contributor' to the Data Lake.
+ 
+	11.1 Open your storage account page from Azure portal
+	11.2 Click on 'Access Control (IAM)' option
+	11.3 Click on 'Add' -> 'Add role assignment'
+	11.4 Search for and select 'Storage Blob Contributor'. Click 'Next'
+	11.5 Click on '+ Select members'
+	11.6 Search for your service principal and add it.
+	11.7 Click on 'Review + assign' and 'Review + assign' again 
+	     
+	** This adds 'Storage Blob Contributor' role on 'storage account' to 'service principal'. 
+		
+ 12. Import the following notebook and run it.
+	 Make sure to change 'storage account' and other variables as appropriate.
+	
+	Notebook: ADLS-using-Service-Principal.dbc	
+		
+
+ 	
+ Lab 9d: Access ADLS using Cluster scoped credentials (Access key)
+ -----------------------------------------------------------------
+ 
+ 13. Open the All-purpose cluster page and clikc on 'Edit'
+ 
+ 14. Add the following line under 'Advanced options' -> 'Spark config'
+	 Replace the place-holders in the string
+ 
+	fs.azure.account.key.<storage-account>.dfs.core.windows.net <access-key>
+	
+	NOTE:
+	
+	In case, you are using secret scope (as we do in Lab 10) change the above line as follows:
+	
+	fs.azure.account.key.<storage-account>.dfs.core.windows.net {{secrets/<secret-scope>/<secret>}}
+	
+	example:
+	fs.azure.account.key.ctsdemosa.dfs.core.windows.net {{secrets/cts-demo-scope/cts-demo-sa-access-key}}
+	
+	
+ 15. Click on 'Confirm and restart' button.
+ 
+ 16. Import the following notebook and run it.
+	 Make sure to change 'storage account' and other variables as appropriate.
+	
+	Notebook: ADLS-using-Cluster-Scoped-Credentials.dbc		
+	
+	
+	
+ Lab 9e: Access ADLS using Cluster scoped credential pass through
+ -----------------------------------------------------------------	
+	
+ 17. Open the All-purpose cluster page and clikc on 'Edit'	
+  
+ 18. Remove the line added in Step 16 above (i.e cluster scoped access key)
+  
+ 19. Under Advanced Options, under  'Azure Data Lake Storage credential passthrough', check the option 'Enable credential passthrough for user-level data access'
+		NOTE: Only avaliable in Premium tier DB workspace. 
+		
+ 20. Assign '' role on the storage account to your User account.
+  
+	20.1 Open the Azure portal and open your storage account page. 
+	20.2 Click on 'Access Control (IAM)' option
+	20.3 Add 'Storage Blob Data Contributor' role to your 'User Account' (refer step 14 for instructions)
+	20.4 Review and assign the role.
+	
+ 21. Import the following notebook and run it.
+	 Make sure to change 'storage account' and other variables as appropriate.
+	
+	Notebook: ADLS-using-Cluster-Scoped-Credentials.dbc	
+	
+	NOTE: This might take a few minutes for the role assignment.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

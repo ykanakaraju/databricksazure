@@ -1,0 +1,64 @@
+
+ Lab 6c: Working with DBFS using dbutils (Databricks Utilities)
+ -------------------------------------------------------------
+ 
+  NOTE: This is a continuation of Lab 5a. 
+  
+  1. Make sure you completed 'Lab-5a' and you are inside Databricks workspace UI.
+	    
+  2. Create a single node cluster (to be attached to a notebook)
+  
+  3. Create a notebook and attach it to the above cluster. 
+	   Name: Working with DBFS using dbutils
+	   
+  4. Run the following commands to demonstrate working with DBFS file system using dbutils.
+     (Modify the names and paths as required)
+	 
+	    'help' command
+		------------
+		dbutils.help()
+		dbutils.fs.help()
+		dbutils.fs.help('ls')
+		
+		
+		'ls' command
+		------------
+		dbutils.fs.ls("/")
+		dbutils.fs.ls("/FileStore")
+			list paths => [ d[0] for d in dbutils.fs.ls("/FileStore")]
+		dbutils.fs.ls("/FileStore/testdata/csv")
+
+		
+		'mkdirs' command
+		----------------
+		dbutils.fs.mkdirs("/FileStore/testdata2")
+		dbutils.fs.ls("/FileStore")
+		
+		
+		'cp' command to copy files between DBFS directories
+		---------------------------------------------------
+		dbutils.fs.cp("/FileStore/testdata/csv/2011_summary.csv", "/FileStore/testdata2")
+		dbutils.fs.cp("/FileStore/testdata/csv/2012_summary.csv", "/FileStore/testdata2")
+		dbutils.fs.cp("/FileStore/testdata/csv/2013_summary.csv", "/FileStore/testdata2")
+		
+		dbutils.fs.ls("/FileStore/testdata/csv")
+		
+		
+		'mv' command for moving or renaming files
+		------------------------------------------
+		dbutils.fs.help('mv')
+		
+		dbutils.fs.mv("/FileStore/testdata/csv", "/FileStore/testdata3", recurse=True)
+		dbutils.fs.ls('/FileStore/testdata3')
+		
+		dbutils.fs.mv('/FileStore/testdata3/2011_summary.csv', '/FileStore/testdata3/2011_summary_renamed.csv')
+		
+		
+		'rm' command to remove files & directories from DBFS
+		-----------------------------------------------------
+		dbutils.fs.rm('/FileStore/testdata3/2011_summary_renamed.csv')
+		dbutils.fs.rm('/FileStore/testdata3/', recurse=True)
+		
+		
+		
+  

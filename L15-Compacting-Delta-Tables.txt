@@ -1,0 +1,46 @@
+  
+  Lab 13 - Compacting delta tables
+  ---------------------------------
+  Compaction is a process of merging too many small files into fewer large files.
+  
+  
+ 1. Create a single node 'All-purpose compute' cluster.
+ 
+ 2. Import the notebook provided for this lab.
+ 
+		Notebooks to import:
+		* Delta-using-DataFrames-1.dbc
+		* Delta-using-DataFrames-7.dbc
+ 
+ 
+ 3. Open the notebook 'Delta-using-DataFrames-6.dbc' and run the cells.
+    Examine the results to understand how compaction works on Delta tables.
+	
+		In this notebook, we demonstrate the following:
+			
+		* Examine the history of Delta table
+		* Perform compaction on delta table (using repartition and overwrite)
+			
+	
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,71 @@
+
+ Lab 5: Setup Databricks CLI in a Python Virtual Environment on Windows 10
+ --------------------------------------------------------------------------
+ 
+ 1. Open 'Anaconda Command Prompt' and install python dev. environement as described below:
+ 
+ 2. Create a working directory (DatabricksProjects) for all your Databricks projects
+ 
+ 	mkdir E:\Databricks\Projects
+	cd E:\Databricks\Projects
+		
+ 3. Create a python virtual environment in your project working directory.
+ 
+	python -m venv dbcli-venv			
+	-> This creates a directory called 'databricks-venv' with all basic python packages in the current folder.
+	
+ 4. Activate the v-env
+ 
+	cd .\dbcli-venv\Scripts
+	activate      (this will activate the virtual environement)
+	
+	NOTE: To deactivate the v-env, run 'deacticate' in the same folder (i.e databricks-venv\Scripts)
+
+	(source <venv-dir>/bin/activate  -> equivalent command in Linux)
+	
+ 5. Install Databricks CLI.
+ 	cd E:\Databricks\Projects
+	pip install databricks-cli
+	databricks -v     		// check databricks cli version to validate
+		
+ 6. Login to Azure portal, create and launch a new Databricks Workspace 
+	 (Refer Lab 2 for detailed steps)
+  
+	Resource Group Name: cts_demo_adb_rg   (create a new resource group)
+	Workspace name: cts_demo_adb_ws
+	Region: East US
+	Pricing Tier: Standard
+	
+	-> Wait until the workspace is deployed, and then launch the workspace.
+	
+ 7. Configure a profile with Databricks CLI for Azure Databricks workspace
+	(profile name: demo1)
+  
+	7.1 Make sure you are in Databricks UI
+	
+	7.2 Copy the URL as follows. This is your host.	
+		Host: https://adb-8465423289186213.13.azuredatabricks.net/
+		
+	7.3 Generate a token
+		-> Click on 'User settings' menu option under you account icon (top-right)
+		-> Select 'Developer' option.
+		   Click on 'Manage' button under 'Access tokens'
+		   Click on 'Generate new token' button		   
+			   Comment: cts_demo_adb_ws			   
+		-> Copy the token and save it some where.
+			Token: dapi154174ee0138e5387898b2653359647a-3
+		-> Click on Done.
+		
+	7.4 Open the Databricks CLI and activate the venv (refer to Lab-04a for details)
+		Run the following command
+		
+			databricks configure --token --profile azure
+			
+			Databricks Host (should begin with https://): <paste host url here>
+			Token: <paste token here>
+	
+	7.5 Validate your configuration
+		Run the following command
+		
+			databricks fs ls --profile azure
+	
