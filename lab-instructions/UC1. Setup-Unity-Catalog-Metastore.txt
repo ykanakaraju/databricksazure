@@ -28,7 +28,7 @@
   
 	2.1 Search for and open 'Storage accounts' and click on '+ Create'
 	
-	2.2 Create a Storage account with the folowing details:	
+	2.2 Create a Storage account with the following details:	
 		Subscription: Azure subscription - Basic
 		Resource group: databricks-uc-rg
 		Storage account name: databricksucdlykr   (you can give any available name here)
@@ -104,8 +104,8 @@
 		
 		Click on Workspace link (top-right) -> Manage account
 		Login using your Global admin Microsoft Entra ID account
-			Microsoft Entra ID: kanakaraju_gmail.com#EXT#@kanakarajugmail.onmicrosoft.com
-			Password: <gmail>
+			Microsoft Entra ID: <your account admin user id>
+			Password: <your password>
 			URL: https://accounts.azuredatabricks.net/
 	
 	6.3 Click on Catalog (left-menu) -> Create metastore (button)
