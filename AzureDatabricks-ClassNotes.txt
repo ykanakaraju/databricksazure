@@ -5,7 +5,7 @@
    PySpark Essentials
 	- Spark basics
 	- Spark SQL basics
-	- Spark Structured Streaming basic
+	- Spark Structured Streaming basics
    Azure Databricks 
     	- Azure Databricks Architecture
     	- Workspaces & Storage Accounts
@@ -827,9 +827,6 @@
 		joinedDf.show()
 
 
-
-
-
  ===========================================
    Spark Streaming (Structured Streaming) 
  ===========================================
@@ -889,14 +886,6 @@
 	ForEach sink 
 	Memory sink
 	
-
-
-
-
-
-
-
-
 
 
 
