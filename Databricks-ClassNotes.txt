@@ -1,0 +1,108 @@
+	
+  Azure Databricks (44 hours)
+  ----------------------------
+   Databricks Basics
+	- Databricks Community basic features
+	- Notebook basics & Magic commands
+	- Databricks Utilities
+   PySpark Essentials
+	- Spark SQL basics
+	- Structured Streaming basics
+   Azure Databricks 
+    	- Azure Databricks Architecture
+    	- Workspaces & Storage Accounts
+    	- Access Patterns - Access-keys, SAS, Service principal
+   	- Mount ADLS-Gen2 containers on Databricks
+   Databricks Lakehouse Platform 
+	– Delta Lake using SQL & Python
+	- Delta Lake Features
+   ELT with Spark SQL
+	- Querying from files
+	- Writing to tables
+	- HOFs & UDFs
+   Incremental Data Processing 
+	- COPY INTO command
+	- Structured Streaming
+	- AutoLoader
+	- Medallion Pattern
+   Production pipelines	
+	- Delta Live Tables
+	- Job Workflow
+   Data Governance basics
+	- Unity Catalog
+
+
+  Materials
+  ---------
+   - PDF presentations
+   - Code Modules (PySpark)
+   - Databricks Notebooks (DBC files)
+   - Class notes (PySpark)
+   - Github: https://github.com/ykanakaraju/databricksazure
+
+
+  Getting started with Databricks
+  -------------------------------   
+   ** Databricks Community Edition (free edition)
+ 		
+	Signup: https://www.databricks.com/try-databricks
+		Screen 1: Fill up the details with valid email address
+		Screen 2: Click on "Get started with Community Edition" link (Not the 'Continue' button)
+
+	Login: https://community.cloud.databricks.com/login.html
+
+	Downloading a file from Databricks
+	----------------------------------
+		/FileStore/<FILEPATH>
+		https://community.cloud.databricks.com/files/<FILEPATH>?o=1072576993312365
+
+		Example:
+		dbfs:/FileStore/output/wc/part-00000
+		https://community.cloud.databricks.com/files/output/wc/part-00000?o=1072576993312365
+
+		dbfs:/FileStore/output/wordcount1/part-00000
+		https://community.cloud.databricks.com/files/output/wordcount1/part-00000?o=1072576993312365
+
+
+ 	Enabling DBFS File browser
+	--------------------------
+	<your account (top-right)> -> Settings -> Advanced -> Other -> DBFS File Browser (enable it)
+								    -> & refresh the browser page
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
