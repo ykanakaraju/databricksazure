@@ -749,12 +749,9 @@
 		joinedDf.show()
 
 
-
-
   ======================================================
     Spark Structured Streaming (pyspark.sql.streaming)
   ======================================================
-
 
    Spark Streaming APIs:
 
@@ -810,6 +807,25 @@
 	ForEachBatch sink
 	ForEach sink 
 	Memory sink
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
