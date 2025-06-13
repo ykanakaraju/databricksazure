@@ -1,0 +1,78 @@
+=======================
+  narrow operation
+=======================
+== Physical Plan ==
+*(1) Project [cust_id#2013, split(name#2014,  , 2)[0] AS first_name#2071, split(name#2014,  , 3)[1] AS last_name#2080, (cast(age#2015 as double) + 5.0) AS age#2090, gender#2016, birthday#2017]
++- *(1) Filter (isnotnull(city#2019) AND (city#2019 = boston))
+   +- *(1) ColumnarToRow
+      +- FileScan parquet [cust_id#2013,name#2014,age#2015,gender#2016,birthday#2017,city#2019] Batched: true, DataFilters: [isnotnull(city#2019), (city#2019 = boston)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/customers.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(city), EqualTo(city,boston)], ReadSchema: struct<cust_id:string,name:string,age:string,gender:string,birthday:string,city:string>
+
+
+=======================
+  repartition
+=======================
+AdaptiveSparkPlan isFinalPlan=false
++- Exchange RoundRobinPartitioning(24), REPARTITION_BY_NUM, [plan_id=5455]
+   +- FileScan parquet [cust_id#1923,start_date#1924,end_date#1925,txn_id#1926,date#1927,year#1928,month#1929,day#1930,expense_type#1931,amt#1932,city#1933] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cust_id:string,start_date:string,end_date:string,txn_id:string,date:string,year:string,mon...
+
+
+
+=======================
+  coalesce
+=======================
+== Physical Plan ==
+Coalesce 5
++- *(1) ColumnarToRow
+   +- FileScan parquet [cust_id#1923,start_date#1924,end_date#1925,txn_id#1926,date#1927,year#1928,month#1929,day#1930,expense_type#1931,amt#1932,city#1933] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cust_id:string,start_date:string,end_date:string,txn_id:string,date:string,year:string,mon...
+
+
+
+======================
+  inner join
+======================
+
+AdaptiveSparkPlan isFinalPlan=false
++- Project [cust_id#1923, start_date#1924, end_date#1925, txn_id#1926, date#1927, year#1928, month#1929, day#1930, expense_type#1931, amt#1932, city#1933, name#2014, age#2015, gender#2016, birthday#2017, zip#2018, city#2019]
+   +- SortMergeJoin [cust_id#1923], [cust_id#2013], Inner
+      :- Sort [cust_id#1923 ASC NULLS FIRST], false, 0
+      :  +- Exchange hashpartitioning(cust_id#1923, 200), ENSURE_REQUIREMENTS, [plan_id=5535]
+      :     +- Filter isnotnull(cust_id#1923)
+      :        +- FileScan parquet [cust_id#1923,start_date#1924,end_date#1925,txn_id#1926,date#1927,year#1928,month#1929,day#1930,expense_type#1931,amt#1932,city#1933] Batched: true, DataFilters: [isnotnull(cust_id#1923)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cust_id)], ReadSchema: struct<cust_id:string,start_date:string,end_date:string,txn_id:string,date:string,year:string,mon...
+      +- Sort [cust_id#2013 ASC NULLS FIRST], false, 0
+         +- Exchange hashpartitioning(cust_id#2013, 200), ENSURE_REQUIREMENTS, [plan_id=5536]
+            +- Filter isnotnull(cust_id#2013)
+               +- FileScan parquet [cust_id#2013,name#2014,age#2015,gender#2016,birthday#2017,zip#2018,city#2019] Batched: true, DataFilters: [isnotnull(cust_id#2013)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/customers.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cust_id)], ReadSchema: struct<cust_id:string,name:string,age:string,gender:string,birthday:string,zip:string,city:string>
+
+
+
+======================
+  groupBy
+======================
+
+=== COUNT ===
+AdaptiveSparkPlan isFinalPlan=false
++- HashAggregate(keys=[city#1933], functions=[finalmerge_count(merge count#3705L) AS count(1)#3700L], output=[city#1933, count#3701L])
+   +- Exchange hashpartitioning(city#1933, 200), ENSURE_REQUIREMENTS, [plan_id=5920]
+      +- HashAggregate(keys=[city#1933], functions=[partial_count(1) AS count#3705L], output=[city#1933, count#3705L])
+         +- FileScan parquet [city#1933] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<city:string>
+
+
+=== SUM ====
+AdaptiveSparkPlan isFinalPlan=false
++- HashAggregate(keys=[city#1933], functions=[finalmerge_sum(merge sum#3819) AS sum(cast(amt#1932 as double))#3814], output=[city#1933, txn_amt#3815])
+   +- Exchange hashpartitioning(city#1933, 200), ENSURE_REQUIREMENTS, [plan_id=6059]
+      +- HashAggregate(keys=[city#1933], functions=[partial_sum(cast(amt#1932 as double)) AS sum#3819], output=[city#1933, sum#3819])
+         +- FileScan parquet [amt#1932,city#1933] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<amt:string,city:string>
+
+
+=== COUNTDISTINCT ====
+AdaptiveSparkPlan isFinalPlan=false
++- HashAggregate(keys=[cust_id#1923], functions=[finalmerge_count(distinct merge count#3843L) AS count(city#1933)#3839L], output=[cust_id#1923, city_count#3838L])
+   +- Exchange hashpartitioning(cust_id#1923, 200), ENSURE_REQUIREMENTS, [plan_id=6115]
+      +- HashAggregate(keys=[cust_id#1923], functions=[partial_count(distinct city#1933) AS count#3843L], output=[cust_id#1923, count#3843L])
+         +- HashAggregate(keys=[cust_id#1923, city#1933], functions=[], output=[cust_id#1923, city#1933])
+            +- Exchange hashpartitioning(cust_id#1923, city#1933, 200), ENSURE_REQUIREMENTS, [plan_id=6111]
+               +- HashAggregate(keys=[cust_id#1923, city#1933], functions=[], output=[cust_id#1923, city#1933])
+                  +- FileScan parquet [cust_id#1923,city#1933] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[dbfs:/FileStore/data/transactions.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cust_id:string,city:string>
+
+
