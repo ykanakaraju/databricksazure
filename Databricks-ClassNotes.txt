@@ -149,6 +149,9 @@
 	dbutils.fs.rm('/FileStore/testdata3/', recurse=True)
 
 
+ Creating Stroage Credential
+ ---------------------------
+   https://docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/s3/s3-external-location-manual
 
 
  Assignments for Practice
@@ -181,21 +184,14 @@
 
   8. Create a notebook to demo file system ops using %fs commnd and dbutils.fs utility. 
 
+
+
      
 
    
 	
 
    
-
-
-
-
-
-
-
-
-
 
 
 
