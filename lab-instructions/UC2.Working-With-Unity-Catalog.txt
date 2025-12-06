@@ -4,12 +4,11 @@
   
   Prerequites: 
   * Setup a UC metastore and assign it to a workspace as described in the previous lab.
-  
-  
+    
   
  1. Login to account console using your Global admin Microsoft Entra ID account
 			
-	Microsoft Entra ID: <your account admin user-name>
+	Microsoft Entra ID: <your-admin-user-account>
 	Password: <password>
 			
  2. Go to 'Workspaces' menu and open the workspace to which unity-catalog metastore is assigned. 
@@ -65,7 +64,7 @@
 		<Access Connector> -> Settings -> Properties -> Id
 		Copy this and store it some where. 	
 		
- 7. Create Azure Datalake Gen2 storage account and a container in it.
+ 7. Create ADLS Gen2 storage account and a container in it.
   
 	7.1 Search for and open 'Storage accounts' and click on '+ Create'
 	
@@ -87,7 +86,7 @@
 	7.5 Open the storage account and create a new container.
 		name: demo
 		
-	7.6 Upload "circuits.csv" file into the container.
+	7.6 Upload ""circuits.csv file into the container.
 	
 	
  8. Assign role 'Storage Blob Data Contributor' to your storage account
@@ -115,7 +114,7 @@
   
 	9.1 Go to Databricks workspace.
 	9.2 Click on 'Catalog' menu -> 'External data' button
-	9.3 Select 'Storage Credentials' tab and click on 'Create credential' button.
+	9.3 Select 'Credentials' tab and click on 'Create credential' button.
 	9.4 Create the 'Storage credential' as follows:
 	
 		Credential Type: Azure Managed Identity
@@ -127,14 +126,14 @@
 
 	10.1 Click on 'Catalog' menu -> 'External data' button
 	10.2 Click on External Locations -> 'Create location' button
-	10.3 Create the 'Storage credential' as follows:
+	10.3 Create the 'External location' as follows:
 	
 		External location name: databricksucdlextykr_demo  (I am using <sa>_<container> pattern)
 		Storage credential: Select the one you created earlier
 		URL: abfss://demo@databricksucdlextykr.dfs.core.windows.net/
 		Click on 'Create'
 		
-	10.4 Select the external location and clikc on 'Test Connection'
+	10.4 Select the external location and click on 'Test Connection'
 	
 
   11. Run the following command in a notebook to test the external location
